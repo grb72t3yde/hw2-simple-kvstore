@@ -28,6 +28,11 @@ int main(int argc, char **argv)
         }
     }
 
+    if (!server_port) {
+        fprintf(stderr, "Error! No port number provided!\n");
+        exit(1);
+    }
+
     /* Open a listen socket fd */
     int listenfd __attribute__((unused)) = open_listenfd(server_port);
 

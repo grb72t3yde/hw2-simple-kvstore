@@ -10,7 +10,7 @@
 int main(int argc, char **argv)
 {
     int opt;
-    char *server_host_name, *server_port;
+    char *server_host_name = NULL, *server_port = NULL;
 
     /* Parsing args */
     while ((opt = getopt(argc, argv, "h:p:")) != -1) {
@@ -18,6 +18,7 @@ int main(int argc, char **argv)
         case 'h':
             server_host_name = malloc(strlen(optarg) + 1);
             strncpy(server_host_name, optarg, strlen(optarg));
+            break;
         case 'p':
             server_port = malloc(strlen(optarg) + 1);
             strncpy(server_port, optarg, strlen(optarg));
@@ -27,6 +28,16 @@ int main(int argc, char **argv)
                     optopt : '#');
             return 0;
         }
+    }
+
+    if (!server_host_name) {
+        fprintf(stderr, "Error!, No host name provided!\n");
+        exit(1);
+    }
+
+    if (!server_port) {
+        fprintf(stderr, "Error!, No port number provided!\n");
+        exit(1);
     }
 
     /* Open a client socket fd */
